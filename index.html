@@ -36,7 +36,6 @@
 					function(data){
 						console.log("hello"+data);
 					});
-					document.write(JSON.stringify(data));
 				},
 				error: function(XMLHttpRequest, textStatus, errorThrown){
 					console.log("error: " + textStatus + "(" + errorThrown + ")");
@@ -75,8 +74,6 @@
 	</script>
 </head>
 <body>
-	<div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="true" data-auto-logout-link="true"></div>
-	<button onclick="GetData()">test</button>
 	<div class="container">
 		<div class="row">
 			<div id="fb-root"></div>
@@ -84,7 +81,6 @@
 				<h1><small>This is</small> YoDo <small>in MeiChu Hackathon!</small></h1>
 			</div>
 		</div>
-
 		<div id="loginBtn" class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="true" data-auto-logout-link="true">
 		</div>
 		<div id="gData"><button onclick="GetData()" type="button" class="btn btn-primary">Hit me</button></div>
