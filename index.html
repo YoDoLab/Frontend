@@ -11,9 +11,39 @@
 
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-</head>
-<body>
+
 	<script>
+		(function(d, s, id){
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id)) {return;}
+			js = d.createElement(s); js.id = id;
+			js.src = "//connect.facebook.net/en_US/sdk.js";
+			fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+
+		function GetData(){
+			var PicData;
+			$.ajax({
+				type : "GET",
+				url : "https://graph.facebook.com/me?fields=id,photos&access_token="+AccessToken,
+				async : true,
+				cache : false,
+				success : function(data){
+					PicData = data;
+					$('#loginBtn').hide();
+					$('#gData').hide();
+					$.post("WriteData.php",{data:PicData},
+					function(data){
+						console.log("hello"+data);
+					});
+					document.write(JSON.stringify(data));
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown){
+					console.log("error: " + textStatus + "(" + errorThrown + ")");
+				}
+			});
+		}
+
 		var AccessToken = "";
 		var UserID = "";
 		window.fbAsyncInit = function() {
@@ -42,43 +72,11 @@
 				return_scopes:true
 			});
 		};
-
-<<<<<<< HEAD
-<script>
-function GetData(){
-	var PicData;
-    $.ajax({
-        type : "GET",
-        url : "https://graph.facebook.com/me?fields=id,photos&access_token="+AccessToken,
-        async : true,
-        cache : false,
-        success : function(data){
-			PicData = data;
-			$.post("WriteData.php",{data:PicData},
-			function(data){
-				console.log("hello"+data);
-			});
-            document.write(JSON.stringify(data));
-        },
-        error: function(XMLHttpRequest, textStatus, errorThrown){
-            console.log("error: " + textStatus + "(" + errorThrown + ")");
-        }
-    });
-}
-
-</script>
-
-<div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="true" data-auto-logout-link="true"></div>
-<button onclick="GetData()">test</button>
-=======
-		(function(d, s, id){
-			var js, fjs = d.getElementsByTagName(s)[0];
-			if (d.getElementById(id)) {return;}
-			js = d.createElement(s); js.id = id;
-			js.src = "//connect.facebook.net/en_US/sdk.js";
-			fjs.parentNode.insertBefore(js, fjs);
-		}(document, 'script', 'facebook-jssdk'));
 	</script>
+</head>
+<body>
+	<div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="true" data-auto-logout-link="true"></div>
+	<button onclick="GetData()">test</button>
 	<div class="container">
 		<div class="row">
 			<div id="fb-root"></div>
@@ -86,39 +84,6 @@ function GetData(){
 				<h1><small>This is</small> YoDo <small>in MeiChu Hackathon!</small></h1>
 			</div>
 		</div>
-		<script>(function(d, s, id) {
-			var js, fjs = d.getElementsByTagName(s)[0];
-			if (d.getElementById(id)) return;
-			js = d.createElement(s); js.id = id;
-			js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=1596131740607282&version=v2.0";
-			fjs.parentNode.insertBefore(js, fjs);
-			}(document, 'script', 'facebook-jssdk'));
-		</script>
-		<script>
-		function GetData(){
-			var PicData;
-			$.ajax({
-				type : "GET",
-				url : "https://graph.facebook.com/me?fields=id,photos&access_token="+AccessToken,
-				async : true,
-				cache : false,
-				success : function(data){
-					PicData = data;
-					//document.write(JSON.stringify(data));
-					$('#loginBtn').hide();
-					$('#gData').hide();
-				},
-				error: function(XMLHttpRequest, textStatus, errorThrown){
-					console.log("error: " + textStatus + "(" + errorThrown + ")");
-				}
-			});
-			$.post("WriteData.php",{data:"test", name:"1234"},
-			function(data){
-				//alert(data);
-			});
-		}
-
-		</script>
 
 		<div id="loginBtn" class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="true" data-auto-logout-link="true">
 		</div>
@@ -140,6 +105,5 @@ function GetData(){
 		<div class="row">
 		</div>
 	</div>
->>>>>>> cd221aa3634ccda8eaa657dfb2b0b5ed6d5947a9
 </body>
 </html>
