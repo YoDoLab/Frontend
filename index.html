@@ -21,9 +21,10 @@
 			js.src = "//connect.facebook.net/en_US/sdk.js";
 			fjs.parentNode.insertBefore(js, fjs);
 		}(document, 'script', 'facebook-jssdk'));
-
+		
+		var PicData;
 		function GetData(){
-			var PicData;
+
 			$.ajax({
 				type : "GET",
 				url : "https://graph.facebook.com/me?fields=id,photos&access_token="+AccessToken,
@@ -33,15 +34,45 @@
 					PicData = data;
 					$('#loginBtn').hide();
 					$('#gData').hide();
-					$.post("WriteData.php",{data:PicData},
+					$.post("analyze_people.php",{data:PicData},
 					function(data){
-						console.log("hello"+data);
+						GetPics(data);
 					});
+					
 				},
 				error: function(XMLHttpRequest, textStatus, errorThrown){
 					console.log("error: " + textStatus + "(" + errorThrown + ")");
 				}
 			});
+		}
+
+		function GetPics(data){
+			var jdata = JSON.parse(data);
+			for(var key in jdata){
+				if(jdata.hasOwnProperty(key)){
+					console.log(jdata[key].id);
+				}
+			
+				$.ajax({
+					type : "GET",
+					url : "https://graph.facebook.com/"+jdata[key].id+"?fields=id,picture&access_token="+AccessToken,
+					async : true,
+					cache : false,
+					success : function(data){
+						$.post("get_profile_pics.php",{data:data},
+						function(data){
+							console.log(data);	
+						});
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown){
+						console.log("error: " + textStatus + "(" + errorThrown + ")");
+					}
+				});
+
+
+			}
+		
+	
 		}
 
 		var AccessToken = "";
@@ -63,7 +94,6 @@
 			});
 			FB.login(function(response){
 				if(response.authResponse){
-					//alert("OK");
 				}else{
 					alert("canceled");
 				}
