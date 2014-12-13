@@ -20,9 +20,10 @@
 			js.src = "//connect.facebook.net/en_US/sdk.js";
 			fjs.parentNode.insertBefore(js, fjs);
 		}(document, 'script', 'facebook-jssdk'));
-
+		
+		var PicData;
 		function GetData(){
-			var PicData;
+
 			$.ajax({
 				type : "GET",
 				url : "https://graph.facebook.com/me?fields=id,photos&access_token="+AccessToken,
@@ -32,15 +33,38 @@
 					PicData = data;
 					$('#loginBtn').hide();
 					$('#gData').hide();
-					$.post("WriteData.php",{data:PicData},
+					$.post("analyze_people.php",{data:PicData},
 					function(data){
-						console.log("hello"+data);
+						GetPics(data);
+//						console.log("hello"+data);
+					});
+					
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown){
+					console.log("error: " + textStatus + "(" + errorThrown + ")");
+				}
+			});
+		}
+
+		function GetPics(data){
+		
+			$.ajax({
+				type : "GET",
+				url : "https://graph.facebook.com/me?fields=id,picture&access_token="+AccessToken,
+				async : true,
+				cache : false,
+				success : function(data){
+					console.log("picture"+data);
+					$.post("GetPics.php",{data:data},
+					function(data){
+						console.log(data);	
 					});
 				},
 				error: function(XMLHttpRequest, textStatus, errorThrown){
 					console.log("error: " + textStatus + "(" + errorThrown + ")");
 				}
 			});
+	
 		}
 
 		var AccessToken = "";
