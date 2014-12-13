@@ -1,8 +1,8 @@
 <?php
 	$data=$_POST['data'];
-	$name=$_POST['name'];
-	$f = fopen('data.txt','w');
-	print_r(error_get_last());
+	print_r($_POST);
+	print $data;	
+	$f = fopen("data.txt","w");
 	fwrite($f,$data);
 	fclose($f);
 ?>
