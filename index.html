@@ -35,9 +35,7 @@
 					$('#gData').hide();
 					$.post("analyze_people.php",{data:PicData},
 					function(data){
-						
 						GetPics(data);
-//						console.log("hello"+data);
 					});
 					
 				},
@@ -48,7 +46,6 @@
 		}
 
 		function GetPics(data){
-//			console.log("test"+data);	
 			var jdata = JSON.parse(data);
 			for(var key in jdata){
 				if(jdata.hasOwnProperty(key)){
@@ -61,8 +58,7 @@
 					async : true,
 					cache : false,
 					success : function(data){
-				//		console.log("picture"+data);
-						$.post("GetPics.php",{data:data},
+						$.post("get_profile_pics.php",{data:data},
 						function(data){
 							console.log(data);	
 						});
@@ -97,7 +93,6 @@
 			});
 			FB.login(function(response){
 				if(response.authResponse){
-					//alert("OK");
 				}else{
 					alert("canceled");
 				}
