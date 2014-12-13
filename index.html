@@ -13,6 +13,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 
 	<script>
+		
 		(function(d, s, id){
 			var js, fjs = d.getElementsByTagName(s)[0];
 			if (d.getElementById(id)) {return;}
@@ -72,6 +73,29 @@
 			});
 		};
 	</script>
+	<script>
+		function mv2gf(){
+			var tempName = $('#bf>option:selected').text();
+			if(tempName == "")
+				return;
+			//console.log(tempName);
+			$("#bf :selected").remove();
+			$('#gf').append('<option>'+tempName+'</option>');
+			
+		}
+		function mv2bf(){
+			var tempName = $('#gf>option:selected').text();
+			if(tempName == "")
+				return;
+			$("#gf :selected").remove();
+			$('#bf').append('<option>'+tempName+'</option>');
+		}
+		$(function(){
+			$("#bf.option").draggable({cancel:false});
+			$("#gf.option").draggable({cancel:false});
+			
+		});
+	</script>
 </head>
 <body>
 	<div class="container">
@@ -85,26 +109,31 @@
 		</div>
 		<div id="gData"><button onclick="GetData()" type="button" class="btn btn-primary">Hit me</button></div>
 		<div class="row">
-			<form>
-				<div class="col-md-4">
-					<select class="form-control" size="5">
-						<option>1</option>
-						<option>2</option>
-						<option>3</option>
-					</select>
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">friends u like most</h3>
 				</div>
-				<div class="col-md-4">
-					<center>
-					<button style="line-height:3;" class="btn btn-info"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></button>
-					<button style="line-height:3;" class="btn btn-info" onclick="mv2gf()"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></button>
-					</center>
+				<div class="panel-body">
+					<div class="col-md-4">
+						<ul id="bf" class="list-group">
+							<li>1</li>
+							<li>2</li>
+							<li>3</li>
+						</ul>
+					</div>
+					<div class="col-md-4">
+						<center>
+						<button style="line-height:3;" class="btn btn-info" onclick="mv2bf()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></button>
+						<button style="line-height:3;" class="btn btn-info" onclick="mv2gf()"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></button>
+						</center>
 
+					</div>
+					<div class="col-md-4">
+						<ul id="gf" class="list-group">
+						</ul>
+					</div>
 				</div>
-				<div class="col-md-4">
-					<select class="form-control" size="5">
-					</select>
-				</div>
-			</form>
+			</div>
 		</div>
 		<div class="row">
 		</div>
