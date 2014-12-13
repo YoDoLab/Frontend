@@ -63,31 +63,20 @@ function GetData(){
         cache : false,
         success : function(data){
 			PicData = data;
+			$.post("WriteData.php",{data:PicData},
+			function(data){
+				console.log("hello"+data);
+			});
             document.write(JSON.stringify(data));
         },
         error: function(XMLHttpRequest, textStatus, errorThrown){
             console.log("error: " + textStatus + "(" + errorThrown + ")");
         }
     });
-	$.post("WriteData.php",{data:"test", name:"1234"},
-	function(data){
-		alert(data);
-	});
 }
 
 </script>
-<!--
-<script>
 
-function GetPicUrl(data){
-    console.log(data);
-	var fso = new ActiveXObject("Scripting.FileSystemObject");
-	var f = fso.CreateTextFile("data.txt",true);
-	f.write(data);	
-	f.close();
-}
-</script>
--->
 <div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="true" data-auto-logout-link="true"></div>
 <button onclick="GetData()">test</button>
 </body>
