@@ -35,6 +35,7 @@
 					$('#gData').hide();
 					$.post("analyze_people.php",{data:PicData},
 					function(data){
+						
 						GetPics(data);
 //						console.log("hello"+data);
 					});
@@ -47,23 +48,33 @@
 		}
 
 		function GetPics(data){
-		
-			$.ajax({
-				type : "GET",
-				url : "https://graph.facebook.com/me?fields=id,picture&access_token="+AccessToken,
-				async : true,
-				cache : false,
-				success : function(data){
-					console.log("picture"+data);
-					$.post("GetPics.php",{data:data},
-					function(data){
-						console.log(data);	
-					});
-				},
-				error: function(XMLHttpRequest, textStatus, errorThrown){
-					console.log("error: " + textStatus + "(" + errorThrown + ")");
+//			console.log("test"+data);	
+			var jdata = JSON.parse(data);
+			for(var key in jdata){
+				if(jdata.hasOwnProperty(key)){
+					console.log(jdata[key].id);
 				}
-			});
+			
+				$.ajax({
+					type : "GET",
+					url : "https://graph.facebook.com/"+jdata[key].id+"?fields=id,picture&access_token="+AccessToken,
+					async : true,
+					cache : false,
+					success : function(data){
+				//		console.log("picture"+data);
+						$.post("GetPics.php",{data:data},
+						function(data){
+							console.log(data);	
+						});
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown){
+						console.log("error: " + textStatus + "(" + errorThrown + ")");
+					}
+				});
+
+
+			}
+		
 	
 		}
 
