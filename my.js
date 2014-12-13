@@ -61,19 +61,21 @@ function getProfilePhoto(data){
 	for(var key in jdata){
 		$.ajax({
 			type : "GET",
-			url : "https://graph.facebook.com/"+jdata[key].id+"?fields=id,picture&access_token="+AccessToken,
+			url : "https://graph.facebook.com/"+jdata[key].id+"?fields=id,name,picture&access_token="+AccessToken,
 			async : true,
 			cache : false,
 			success : function(data){
 				$.post("get_profile_pics.php",{data:data},
-				function(data){
-					console.log(data);	
-// Visualize here !!
-				});
+				getPeople(data));
 			},
 			error: function(XMLHttpRequest, textStatus, errorThrown){
 				console.log("error: " + textStatus + "(" + errorThrown + ")");
 			}
 		});
 	}
+}
+
+function getPeople(data) {
+console.log(data.id + " " + data.name + " " + data.picture.data.url);
+// Visualize here !!
 }
