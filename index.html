@@ -12,96 +12,7 @@
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 
-	<script>
-		(function(d, s, id){
-			var js, fjs = d.getElementsByTagName(s)[0];
-			if (d.getElementById(id)) {return;}
-			js = d.createElement(s); js.id = id;
-			js.src = "//connect.facebook.net/en_US/sdk.js";
-			fjs.parentNode.insertBefore(js, fjs);
-		}(document, 'script', 'facebook-jssdk'));
-		
-		var PicData;
-		function GetData(){
-
-			$.ajax({
-				type : "GET",
-				url : "https://graph.facebook.com/me?fields=id,photos&access_token="+AccessToken,
-				async : true,
-				cache : false,
-				success : function(data){
-					PicData = data;
-					$('#loginBtn').hide();
-					$('#gData').hide();
-					$.post("analyze_people.php",{data:PicData},
-					function(data){
-						GetPics(data);
-					});
-					
-				},
-				error: function(XMLHttpRequest, textStatus, errorThrown){
-					console.log("error: " + textStatus + "(" + errorThrown + ")");
-				}
-			});
-		}
-
-		function GetPics(data){
-			var jdata = JSON.parse(data);
-			for(var key in jdata){
-				if(jdata.hasOwnProperty(key)){
-					console.log(jdata[key].id);
-				}
-			
-				$.ajax({
-					type : "GET",
-					url : "https://graph.facebook.com/"+jdata[key].id+"?fields=id,picture&access_token="+AccessToken,
-					async : true,
-					cache : false,
-					success : function(data){
-						$.post("get_profile_pics.php",{data:data},
-						function(data){
-							console.log(data);	
-						});
-					},
-					error: function(XMLHttpRequest, textStatus, errorThrown){
-						console.log("error: " + textStatus + "(" + errorThrown + ")");
-					}
-				});
-
-
-			}
-		
-	
-		}
-
-		var AccessToken = "";
-		var UserID = "";
-		window.fbAsyncInit = function() {
-			FB.init({
-				appId : '1398459810400805',
-				xfbml : true,
-				version : 'v2.2',
-				oauth : true
-			});
-			FB.getLoginStatus (function (response){
-					if(response.status == "connected"){
-						AccessToken = response.authResponse.accessToken;
-						UserID = response.authResponse.userID;
-						console.log(AccessToken);
-						console.log("user id :"+UserID);
-					}
-			});
-			FB.login(function(response){
-				if(response.authResponse){
-				}else{
-					alert("canceled");
-				}
-			},{
-				scope: 'publish_actions,publish_stream,email,public_profile,read_stream,user_photos',
-				return_scopes:true
-			});
-		};
-	</script>
+	<script src="my.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -113,7 +24,7 @@
 		</div>
 		<div id="loginBtn" class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="true" data-auto-logout-link="true">
 		</div>
-		<div id="gData"><button onclick="GetData()" type="button" class="btn btn-primary">Hit me</button></div>
+		<div id="gData"><button onclick="getFriendList()" type="button" class="btn btn-primary">Analyze</button></div>
 		<div class="row">
 			<form>
 				<div class="col-md-4">
