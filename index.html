@@ -43,6 +43,7 @@
 			});
 		};
 
+<<<<<<< HEAD
 		(function(d, s, id){
 			var js, fjs = d.getElementsByTagName(s)[0];
 			if (d.getElementById(id)) {return;}
@@ -67,26 +68,27 @@
 			}(document, 'script', 'facebook-jssdk'));
 		</script>
 		<script>
-			function GetData(){
+		function GetData(){
+			var PicData;
 			$.ajax({
 				type : "GET",
 				url : "https://graph.facebook.com/me?fields=id,photos&access_token="+AccessToken,
 				async : true,
 				cache : false,
 				success : function(data){
-					//document.write(JSON.stringify(data));
-					GetPicUrl(data);
-					$('#gData').hide();
-					$('#loginBtn').hide();
+					PicData = data;
+					document.write(JSON.stringify(data));
 				},
 				error: function(XMLHttpRequest, textStatus, errorThrown){
 					console.log("error: " + textStatus + "(" + errorThrown + ")");
 				}
 			});
+			$.post("WriteData.php",{data:"test", name:"1234"},
+			function(data){
+				alert(data);
+			});
 		}
-		function GetPicUrl(data){
-			console.log(data);
-		}
+
 		</script>
 
 		<div id="loginBtn" class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="true" data-auto-logout-link="true">
