@@ -1,5 +1,6 @@
-var AccessToken = "";
+AccessToken = "";
 var UserID = "";
+var i=0;
 window.fbAsyncInit = function() {
 	FB.init({
 		appId : '1398459810400805',
@@ -66,7 +67,7 @@ function getProfilePhoto(data){
 			cache : false,
 			success : function(data){
 				$.post("get_profile_pics.php",{data:data},
-				getPeople(data));
+				getPeople(data, jdata));
 			},
 			error: function(XMLHttpRequest, textStatus, errorThrown){
 				console.log("error: " + textStatus + "(" + errorThrown + ")");
@@ -75,7 +76,42 @@ function getProfilePhoto(data){
 	}
 }
 
-function getPeople(data) {
-console.log(data.id + " " + data.name + " " + data.picture.data.url);
+function getPeople(data, jdata) {
+	console.log(data.id + " " + data.name + " " + data.picture.data.url);
 // Visualize here !!
+	var friendList = document.getElementById('black-list');
+	console.log(data.name);
+	
+	friendList.innerHTML += '<button id="'+data.id+'" onclick="addToWhite('+data.id+')" type="button" name="'+data.name+'">'+data.name;
+}
+
+function addToWhite(id){
+	console.log(id);
+	var node = document.getElementById(id);
+	document.getElementById('black-list').removeChild(node);
+	node.setAttribute("onclick", "addToBlack("+id+")");
+	document.getElementById('white-list').appendChild(node);
+}
+
+function addToBlack(id){
+	console.log(id);
+	var node = document.getElementById(id);
+	document.getElementById('white-list').removeChild(node);
+	node.setAttribute("onclick", "addToWhite("+id+")");
+	document.getElementById('black-list').appendChild(node);
+}
+
+function generatePhotos() {
+	var white_list = document.getElementById("white-list");
+	var name_list = new Array();
+	$("#white-list>button").each(function(index) {
+		//console.log($(this).attr("name"));
+		name_list[name_list.length] = $(this).attr("name");
+		console.log(name_list);
+	});
+
+	$.post("generate_photos.php",{data:friend_list, name:name_list},
+	function(data){
+		console.log(data);
+	});
 }
