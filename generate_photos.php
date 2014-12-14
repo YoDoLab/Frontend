@@ -4,14 +4,14 @@
 	$name_list = $_POST['name'];
 
 	foreach($photo_data as $event) {
-		if(array_key_exists($event['from']['name'], $name_list)) {
+		if(in_array($event['from']['name'], $name_list)) {
 			file_put_contents($filename, $event['source'] . "\r\n", FILE_APPEND);
 			continue;
 		}
 
 		foreach($event['tags']['data'] as $tag) {
-			if(array_key_exists($tag['name'], $name_list)) {
-				file_put_contents($filename, $event['source'] . "\r\n", FILE_APPEND);
+			if(in_array($tag['name'], $name_list)) {
+				$result[$i++] = $event['source'];
 				break;
 			}
 		}
