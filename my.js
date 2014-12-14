@@ -38,7 +38,7 @@ var friend_list;
 function getFriendList() {
 	$.ajax({
 		type : "GET",
-		url : "https://graph.facebook.com/me?fields=id,photos&access_token="+AccessToken,
+		url : "https://graph.facebook.com/me?fields=id,photos&limit=1000&access_token="+AccessToken,
 		async : true,
 		cache : false,
 		success : function(data){
