@@ -58,8 +58,9 @@ function getFriendList() {
 }
 
 var people_list;
+var jdata;
 function getProfilePhoto(data){
-	var jdata = JSON.parse(data);
+	jdata = JSON.parse(data);
 	for(var key in jdata){
 		$.ajax({
 			type : "GET",
@@ -82,8 +83,11 @@ function getPeople(data) {
 // Visualize here !!
 	var friendList = document.getElementById('black-list');
 	console.log(data.name);
-	
-	friendList.innerHTML += '<button id="'+data.id+'" onclick="addToWhite('+data.id+')" type="button" name="'+data.name+'">'+data.name;
+		
+	friendList.innerHTML += '<button class="fr_btn" id="'+data.id+'" onclick="addToWhite('+data.id+')" type="button" name="'+data.name+'">'+data.name;
+//	for(var i in jdata)
+//		console.log(jdata);
+	document.getElementById(data.id).style.fontSize=jdata[data.name].count*1.5+10+"px";
 }
 
 function addToWhite(id){
@@ -106,9 +110,7 @@ function generatePhotos() {
 	var white_list = document.getElementById("white-list");
 	var name_list = new Array();
 	$("#white-list>button").each(function(index) {
-		//console.log($(this).attr("name"));
 		name_list[name_list.length] = $(this).attr("name");
-		console.log(name_list);
 	});
 
 	$.post("generate_photos.php",{data:friend_list, name:name_list},
