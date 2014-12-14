@@ -75,11 +75,10 @@ function getProfilePhoto(data){
 			}
 		});
 	}
-	visualize();
 }
 
 function getPeople(data) {
-	people_list = data;
+	data = JSON.parse(data);
 // Visualize here !!
 	var friendList = document.getElementById('black-list');
 	console.log(data.name);
