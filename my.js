@@ -57,7 +57,6 @@ function getFriendList() {
 	});
 }
 
-var people_list;
 function getProfilePhoto(data){
 	var jdata = JSON.parse(data);
 	for(var key in jdata){
@@ -75,14 +74,12 @@ function getProfilePhoto(data){
 			}
 		});
 	}
-	visualize();
 }
 
 function getPeople(data) {
-	people_list = data;
+	console.log(data);
 // Visualize here !!
 	var friendList = document.getElementById('black-list');
-	console.log(data.name);
 	
 	friendList.innerHTML += '<button id="'+data.id+'" onclick="addToWhite('+data.id+')" type="button" name="'+data.name+'">'+data.name;
 }
