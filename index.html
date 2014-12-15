@@ -17,7 +17,7 @@
 	<link rel="stylesheet" href="app.css">
 </head>
 <body>
-	<div class="container">
+	<div class="container" id="container1234">
 		<div class="row">
 			<div id="fb-root"></div>
 			<div class="jumbotron">
@@ -26,19 +26,24 @@
 		</div>
 		<div id="loginBtn" class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="true" data-auto-logout-link="true">
 		</div>
-		<div id="gData"><button onclick="getFriendList()" type="button" class="btn btn-primary">Analyze</button></div>
+		<br><br>
 		<div class="row">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
-					<h3 class="panel-title">friends u like most</h3>
+					<h3 class="panel-title" align="center">Store memories with my best friends</h3>
 				</div>
 				<div class="panel-body">
+					<div id="gData" align="center"><button onclick="getFriendList()" type="button" class="btn btn-primary">Analyze</button></div>
 					<div class="col-md-5" id="black-list">
 					</div>
 					<div class="col-md-2">
-						<center>
-						<button style="line-height:3;" class="btn btn-info"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></button>
-						<button style="line-height:3;" class="btn btn-info"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></button>
+						<center style="position:relative">
+						<div>
+						<i class="glyphicon glyphicon-resize-horizontal" style="font-size:50px" align="center"></i>
+						</div>
+						<div>
+						<button class="btn btn-default" onclick="generatePhotos()" align="center"> Share! </button>
+						</div>
 						</center>
 
 					</div>
@@ -48,7 +53,6 @@
 			</div>
 		</div>
 		<div class="row">
-			<button class="btn btn-default" onclick="generatePhotos()"> Go! </button>
 		</div>
 	</div>
 
